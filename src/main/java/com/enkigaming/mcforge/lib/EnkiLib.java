@@ -3,6 +3,11 @@ package com.enkigaming.mcforge.lib;
 import com.enkigaming.mcforge.lib.eventlisteners.PlayerLogInForCachingEventListener;
 import com.enkigaming.mcforge.lib.eventlisteners.WorldSaveEventListener;
 import com.enkigaming.lib.filehandling.FileHandlerRegistry;
+import com.enkigaming.mc.lib.compatability.CompatabilityAccess;
+import com.enkigaming.mc.lib.compatability.EnkiBlock;
+import com.enkigaming.mc.lib.compatability.EnkiPlayer;
+import com.enkigaming.mcforge.lib.compatability.ForgeBlock;
+import com.enkigaming.mcforge.lib.compatability.ForgePlayer;
 import com.enkigaming.mcforge.lib.registry.UsernameCache;
 import java.io.File;
 import java.util.UUID;
@@ -17,7 +22,7 @@ public class EnkiLib
 {
     public static final String NAME = "EnkiLib";
     public static final String MODID = "EnkiLib";
-    public static final String VERSION = "2.0.3.2-1";
+    public static final String VERSION = "2.1";
     
     /*
     Versioning:
@@ -27,7 +32,8 @@ public class EnkiLib
     Increment second for changes that change contracts/interfaces (such as adding new classes, etc.) and/or make minor
     breaking changes in small/obscure ways that don't warrant a full major version increment.
     
-    Increment third for changes that don't affect contracts/interfaces, or do but only in minor ways.
+    Increment third for changes that don't affect contracts/interfaces, or do but only in minor ways, or for additions
+    to contracts/interfaces that relate to the previous third-number-incrementing update.
     
     Increment fourth for changes that fix/tweak something from the last release, and generally don't affect
     interfaces/contracts.
@@ -62,6 +68,20 @@ public class EnkiLib
     
     public FileHandlerRegistry getFileHandling()
     { return fileHandling; }
+    
+    private void initialiseCompatabilityAccess()
+    {
+        CompatabilityAccess.setGetter(new CompatabilityAccess.Getter()
+        {
+            @Override
+            public EnkiPlayer getPlayer(UUID playerId)
+            { return new ForgePlayer(playerId); }
+
+            @Override
+            public EnkiBlock getBlock(int worldId, int x, int y, int z)
+            { return new ForgeBlock(worldId, x, y, z); }
+        });
+    }
     
     //========== Convenience Methods ==========
     

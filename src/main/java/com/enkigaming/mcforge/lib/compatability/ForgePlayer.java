@@ -1,7 +1,7 @@
 package com.enkigaming.mcforge.lib.compatability;
 
 import com.enkigaming.lib.events.exceptions.NoSuchUsernameException;
-import com.enkigaming.mc.compatability.EnkiPlayer;
+import com.enkigaming.mc.lib.compatability.EnkiPlayer;
 import com.enkigaming.mcforge.lib.EnkiLib;
 import java.util.ArrayList;
 import java.util.List;

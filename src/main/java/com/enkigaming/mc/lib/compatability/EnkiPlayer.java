@@ -1,4 +1,4 @@
-package com.enkigaming.mc.compatability;
+package com.enkigaming.mc.lib.compatability;
 
 import java.util.UUID;
 
