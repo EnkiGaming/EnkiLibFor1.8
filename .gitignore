@@ -1,0 +1,12 @@
+*.log
+.gradle
+gradle
+gradlew
+gradlew.bat
+build.gradle
+build.xml
+gradlew
+.classpath
+.project
+.settings/org.eclipse.jdt.core.prefs
+eclipse
