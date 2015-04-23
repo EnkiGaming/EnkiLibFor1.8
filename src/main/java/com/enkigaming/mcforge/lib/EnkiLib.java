@@ -6,8 +6,10 @@ import com.enkigaming.lib.filehandling.FileHandlerRegistry;
 import com.enkigaming.mc.lib.compatability.CompatabilityAccess;
 import com.enkigaming.mc.lib.compatability.EnkiBlock;
 import com.enkigaming.mc.lib.compatability.EnkiPlayer;
+import com.enkigaming.mc.lib.compatability.EnkiWorld;
 import com.enkigaming.mcforge.lib.compatability.ForgeBlock;
 import com.enkigaming.mcforge.lib.compatability.ForgePlayer;
+import com.enkigaming.mcforge.lib.compatability.ForgeWorld;
 import com.enkigaming.mcforge.lib.registry.UsernameCache;
 import java.io.File;
 import java.util.UUID;
@@ -22,7 +24,7 @@ public class EnkiLib
 {
     public static final String NAME = "EnkiLib";
     public static final String MODID = "EnkiLib";
-    public static final String VERSION = "2.1";
+    public static final String VERSION = "2.1.1";
     
     /*
     Versioning:
@@ -80,6 +82,10 @@ public class EnkiLib
             @Override
             public EnkiBlock getBlock(int worldId, int x, int y, int z)
             { return new ForgeBlock(worldId, x, y, z); }
+
+            @Override
+            public EnkiWorld getWorld(int worldId)
+            { return new ForgeWorld(worldId); }
         });
     }
     

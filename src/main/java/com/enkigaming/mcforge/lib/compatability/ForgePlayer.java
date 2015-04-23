@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.UUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import org.apache.commons.lang3.NotImplementedException;
 
-public class ForgePlayer implements EnkiPlayer
+public class ForgePlayer extends EnkiPlayer
 {
     public ForgePlayer(UUID playerId)
     { this.playerId = playerId; }
@@ -84,4 +85,13 @@ public class ForgePlayer implements EnkiPlayer
         return null;
     }
 
+    @Override
+    public Integer getWorldId()
+    { return getPlatformSpecificInstance().worldObj.provider.getDimensionId(); }
+
+    @Override
+    public void teleportTo(int worldId, int x, int y, int z)
+    {
+        throw new NotImplementedException("Not implemented yet.");
+    }
 }
