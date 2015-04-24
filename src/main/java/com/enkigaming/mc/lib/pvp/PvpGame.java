@@ -84,25 +84,17 @@ public abstract class PvpGame
         UUID playerId;
         BlockCoOrdinate startingPosition;
         
-        final Object startingPositionLock = new Object();
-        
         public UUID getPlayerId()
         { return playerId; }
         
         public BlockCoOrdinate getStartingPosition()
-        {
-            synchronized(startingPositionLock)
-            { return startingPosition; }
-        }
+        { return startingPosition; }
         
         public BlockCoOrdinate setStartingPosition(BlockCoOrdinate newStartingPosition)
         {
-            synchronized(startingPositionLock)
-            {
                 BlockCoOrdinate temp = startingPosition;
                 startingPosition = newStartingPosition;
                 return temp;
-            }
         }
     }
     
