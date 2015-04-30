@@ -10,6 +10,7 @@ import com.enkigaming.mc.lib.compatability.EnkiWorld;
 import com.enkigaming.mcforge.lib.compatability.ForgeBlock;
 import com.enkigaming.mcforge.lib.compatability.ForgePlayer;
 import com.enkigaming.mcforge.lib.compatability.ForgeWorld;
+import com.enkigaming.mcforge.lib.eventlisteners.SecondPassedEventListener;
 import com.enkigaming.mcforge.lib.registry.UsernameCache;
 import java.io.File;
 import java.util.UUID;
@@ -24,23 +25,23 @@ public class EnkiLib
 {
     public static final String NAME = "EnkiLib";
     public static final String MODID = "EnkiLib";
-    public static final String VERSION = "2.1.1";
-    
+    public static final String VERSION = "r1.0.1";
+
     /*
     Versioning:
     
-    Increment first if major overhaul, or major breaking changes.
+    Increment first for breaking change. Id est, changes that remove public classes, remove public/package/protected
+    methods/constructors/variables, increase the strictness of the privacy modifier of fields, move things to different
+    packages, etc.
     
-    Increment second for changes that change contracts/interfaces (such as adding new classes, etc.) and/or make minor
-    breaking changes in small/obscure ways that don't warrant a full major version increment.
+    Increment second for changes that modify class contracts/interfaces in ways that don't break compatability with
+    previous versions. e.g. adding public classes, adding public/package/protected fields/constructors, adding
+    overloads, etc.
     
-    Increment third for changes that don't affect contracts/interfaces, or do but only in minor ways, or for additions
-    to contracts/interfaces that relate to the previous third-number-incrementing update.
-    
-    Increment fourth for changes that fix/tweak something from the last release, and generally don't affect
-    interfaces/contracts.
-    
-    Increment after dash after rest of version of updates specific to this version.
+    Increment third for changes that don't affect the public contract/interface. e.g. adding/modifying javadoc,
+    rewriting methods, changing implementations, fixing bugs in methods, etc. Classes (creating, modifying, etc.) that
+    act purely as event handlers in forge's event system should be treated as implementation details, and thus only
+    warrant incrementing the third part of the version number rather than the second.
     */
     
     protected static EnkiLib instance;
@@ -59,6 +60,7 @@ public class EnkiLib
         fileHandling.load();
         FMLCommonHandler.instance().bus().register(new PlayerLogInForCachingEventListener());
         MinecraftForge.EVENT_BUS.register(new WorldSaveEventListener());
+        FMLCommonHandler.instance().bus().register(new SecondPassedEventListener());
         System.out.println("EnkiLib loaded!");
     }
     

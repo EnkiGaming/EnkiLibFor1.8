@@ -29,147 +29,18 @@ public abstract class CollectionTest
     //<editor-fold defaultstate="collapsed" desc="add">
     public void testAdd(String msg, String toAdd, String[] presetValues)
     {
-        // Don't run tests with null values already in when the collection can't contain null
-        if(ArrayUtils.contains(presetValues, null) && !canContainNull())
-            return;
-        
-        // Don't run tests with duplicate values already in when the collection can't contain duplicate values.
-        if(!canContainDuplicates())
-            for(int i = 0; i < presetValues.length; i++)
-                for(int j = 0; j < presetValues.length; j++)
-                    if(i != j)
-                        if((presetValues[i] == null && presetValues[j] == null)
-                           || (presetValues[i] != null && presetValues[j] != null && presetValues[i].equals(presetValues[j])))
-                            return;
-        
-        final Collection<String> testCollection = getStringCollection(presetValues);
-        assertCollectionEquals(msg + ".presetvalues", testCollection, Arrays.asList(presetValues));
-        
-        if(!isMutable())
-        {
-            boolean result;
-            
-            try
-            { result = testCollection.add(toAdd); }
-            catch(UnsupportedOperationException e)
-            { result = false; }
-            
-            assertCollectionEquals(msg + ".immutable.resultantcollection", testCollection, Arrays.asList(presetValues));
-            assertFalse(msg + ".immutable.returnvalue", result);
-            return;
-        }
-        
-        if(toAdd == null && !canContainNull())
-        {
-            new ThrowableAssertion(msg + ".addnull.exception", IllegalArgumentException.class, NullPointerException.class)
-            {
-                @Override
-                public void code() throws Throwable
-                { testCollection.add(null); }
-            };
-            
-            assertCollectionEquals(msg + ".addnull.resultantcollection", testCollection, Arrays.asList(presetValues));
-            return;
-        }
-        
-        boolean testBool = testCollection.add(toAdd);
-        
-        if(ArrayUtils.contains(presetValues, toAdd) && !canContainDuplicates())
-        {
-            assertCollectionEquals(msg + ".addduplicate.resultantcollection", testCollection, Arrays.asList(presetValues));
-            assertFalse(msg + ".addduplicate.returnvalue", testBool);
-            return;
-        }
-        
-        assertCollectionEquals(msg + ".add.resultantcollection", testCollection, Arrays.asList(ArrayUtils.add(presetValues, toAdd)));
-        assertTrue(".add.returnvalue", testBool);
+ 
     }
     
     public void testAdd_testcase(int valueBeingAddedCount, int uniqueValueCount, int duplicateValueCount, int nullCount)
     {
-        List<String> vals = new ArrayList<String>();
-        
-        String[] colours = {"Red", "Yellow", "Green", "Purple", "Pink", "Aqua", "Fuschia", "Grey", "Black", "White",
-                            "Marine", "Bubblegum", "Polkadot", "Peridot", "Sapphire", "Emerald", "Lime", "Royal Blue"};
-        
-        String[] animals = {"Dog", "Cat", "Mouse", "Horse", "Hedhog Cute", "Haggis", "Jackalope", "Pinemartine",
-                            "Horned Martine", "Gorilla", "Monkey", "Bonobo", "Wolf", "Bear", "Goldilocks"};
-        
-        for(int i = 0; i < valueBeingAddedCount; i++)
-            vals.add("Blue");
-        
-        for(int i = 0; i < uniqueValueCount; i++)
-        {
-            if(i >= colours.length) break;
-            vals.add(colours[i]);
-        }
-        
-        for(int i = 0; i < duplicateValueCount; i++)
-        {
-            if(i >= animals.length) break;
-            vals.addAll(Arrays.asList(animals[i], animals[i], animals[i]));
-        }
-        
-        for(int i = 0; i < nullCount; i++)
-            vals.add(null);
-        
-        testAdd("Test case: " + valueBeingAddedCount + "-" + uniqueValueCount + "-" + duplicateValueCount + "-"
-                + nullCount + "-val", "Blue", vals.toArray(new String[0]));
-        
-        vals.removeAll(Arrays.asList("Blue"));
-        for(int i = 0; i < valueBeingAddedCount; i++)
-            vals.add(0, null);
-        
-        testAdd("Test case: " + valueBeingAddedCount + "-" + uniqueValueCount + "-" + duplicateValueCount + "-"
-                + nullCount + "-null", null, vals.toArray(new String[0]));
+
     }
     
     @Test
     public void testAdd()
     {
-        /*
-        Test case scheme: Cover every possible combination of the four ternary values (which can each be "no",
-        "yes", and "yes, multiple"):
-        preset values contains value
-        preset values contains duplicate values
-        preset valeus contains null
-        preset values contains value being added.
-        
-        Can't say I'm not thorough.
-        */
-        
-        int beingAdded = 0, uniqueValue = 0, duplicate = 0, nullcount = 0;
-        
-        TieredIncrementor inc = new TieredIncrementor(4, 0, 3);
-        
-        
-        
-        while(true)
-        {
-            testAdd_testcase(beingAdded, uniqueValue, duplicate, nullcount);
-            
-            if(nullcount == 0) nullcount = 1;
-            else if(nullcount == 1) nullcount = 3;
-            else if(nullcount == 3)
-            {
-                nullcount = 0;
-                if(duplicate == 0) duplicate = 1;
-                else if(duplicate == 1) duplicate = 3;
-                else if(duplicate == 3)
-                {
-                    duplicate = 0;
-                    if(uniqueValue == 0) uniqueValue = 1;
-                    else if(uniqueValue == 1) uniqueValue = 3;
-                    else if(uniqueValue == 3)
-                    {
-                        uniqueValue = 0;
-                        if(beingAdded == 0) beingAdded = 1;
-                        else if(beingAdded == 1) beingAdded = 3;
-                        else if(beingAdded == 3) break;
-                    }
-                }
-            }
-        }
+
     }
     //</editor-fold>
     
